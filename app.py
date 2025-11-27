@@ -1,39 +1,22 @@
 # app.py
-from dotenv import load_dotenv
 import os
-import requests
-from flask import Flask, request, render_template, jsonify
 
-# Load environment variables from .env
-load_dotenv()
+# Only use load_dotenv when running locally
+if os.getenv("RENDER") is None:  # Render automatically sets some env variables
+    from dotenv import load_dotenv
+    load_dotenv()  # Loads variables from your local .env file
 
+# Get the API key
 API_KEY = os.getenv("GROQ_API_KEY")
-BASE_URL = "https://api.groq.com/openai/v1"
 
-app = Flask(__name__)
+# Example usage
+if API_KEY is None:
+    raise ValueError("GROQ_API_KEY is not set! Check your environment variables.")
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    answer = ""
-    if request.method == "POST":
-        question = request.form.get("question")
-        headers = {
-            "Authorization": f"Bearer {API_KEY}",
-            "Content-Type": "application/json"
-        }
-        data = {
-            "model": "llama-3.1-8b-instant",
-            "messages": [{"role": "user", "content": question}],
-            "temperature": 0.7
-        }
+print("API Key loaded successfully!")
 
-        response = requests.post(f"{BASE_URL}/chat/completions", json=data, headers=headers)
-        if response.status_code == 200:
-            answer = response.json()["choices"][0]["message"]["content"]
-        else:
-            answer = f"API Error: {response.text}"
-
-    return render_template("index.html", answer=answer)
-
-if __name__ == "__main__":
-    app.run(debug=True)
+# Your app logic here
+# For example, if using FastAPI or Flask, start the server
+# from flask import Flask
+# app = Flask(__name__)
+# ...
