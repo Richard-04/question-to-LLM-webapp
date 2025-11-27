@@ -1,6 +1,6 @@
 # app.py
-import os
 from dotenv import load_dotenv
+import os
 import requests
 from flask import Flask, request, render_template, jsonify
 
