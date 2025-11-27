@@ -3,3 +3,7 @@ emotionenv/
 .env.txt
 __pycache__/
 *.pyc
+*.env
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
