@@ -1,0 +1,5 @@
+emotionenv/
+.env
+.env.txt
+__pycache__/
+*.pyc
